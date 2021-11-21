@@ -53,7 +53,7 @@ export class AuthService {
         .cookie('jwt', token.accessToken, {
           secure: false,
           domain: 'localhost',
-          httpOnly: true,
+          httpOnly: false,
         })
         .json({ ok: true });
     } catch (e) {
