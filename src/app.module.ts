@@ -9,6 +9,8 @@ import { PostsModule } from './post/post.module';
 import { Post } from './post/entities/post.entity';
 import { BlogModule } from './blog/blog.module';
 import { Blog } from './blog/entities/blog.entity';
+import { TagModule } from './tag/tag.module';
+import { Tag } from './tag/entities/tag.entity';
 
 @Module({
   imports: [
@@ -19,13 +21,14 @@ import { Blog } from './blog/entities/blog.entity';
       username: 'root',
       password: '',
       database: 'blog',
-      entities: [User, Blog, Post],
+      entities: [User, Blog, Tag, Post],
       synchronize: true,
     }),
     UserModule,
     AuthModule,
     PostsModule,
     BlogModule,
+    TagModule,
   ],
   controllers: [AppController],
   providers: [AppService],

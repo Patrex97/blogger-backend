@@ -4,8 +4,10 @@ import {
   PrimaryGeneratedColumn,
   BaseEntity,
   ManyToOne,
+  ManyToMany,
 } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
+import { Tag } from '../../tag/entities/tag.entity';
 
 @Entity()
 export class Blog extends BaseEntity {
@@ -22,4 +24,7 @@ export class Blog extends BaseEntity {
 
   @ManyToOne(() => User, (User) => User.id)
   author: User;
+
+  @ManyToMany(() => Tag, (Tag) => Tag.blogs)
+  tags: Tag[];
 }
