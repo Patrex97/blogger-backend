@@ -5,7 +5,7 @@ import {
   BaseEntity,
   ManyToOne,
 } from 'typeorm';
-import { User } from '../user/user.entity';
+import { Blog } from '../../blog/entities/blog.entity';
 
 @Entity()
 export class Post extends BaseEntity {
@@ -21,6 +21,6 @@ export class Post extends BaseEntity {
   @Column()
   createdAt: Date;
 
-  @ManyToOne((type) => User, (User) => User.id)
-  Author: User;
+  @ManyToOne((type) => Blog, (Blog) => Blog.id)
+  blog: Blog;
 }

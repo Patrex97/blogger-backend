@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { Response } from 'express';
 import { AuthLoginDto } from './dto/auth-login.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { User } from '../user/user.entity';
+import { User } from '../user/entities/user.entity';
 import { UserObj } from '../decorators/user-obj.decorator';
 
 @Controller('/auth')
@@ -11,10 +11,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('/login')
-  async phoneRegister(
-    @Body() req: AuthLoginDto,
-    @Res() res: Response,
-  ): Promise<any> {
+  async login(@Body() req: AuthLoginDto, @Res() res: Response): Promise<any> {
     return this.authService.login(req, res);
   }
 

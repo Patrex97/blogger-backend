@@ -1,4 +1,4 @@
-import { User } from '../../user/user.entity';
+import { User } from '../../user/entities/user.entity';
 
 export class CreatePostDto {
   title: string;

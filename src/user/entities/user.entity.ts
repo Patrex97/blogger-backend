@@ -5,7 +5,7 @@ import {
   BaseEntity,
   OneToMany,
 } from 'typeorm';
-import { Post } from '../posts/post.entity';
+import { Blog } from '../../blog/entities/blog.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -26,6 +26,6 @@ export class User extends BaseEntity {
   })
   currentTokenId: string | null;
 
-  @OneToMany((type) => Post, (Post) => Post.Author)
-  posts: Post[];
+  @OneToMany(() => Blog, (Blog) => Blog.author)
+  blog: Blog[];
 }
