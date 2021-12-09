@@ -1,26 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTagDto } from './dto/create-tag.dto';
-import { UpdateTagDto } from './dto/update-tag.dto';
+import { Tag } from './entities/tag.entity';
 
 @Injectable()
 export class TagService {
-  create(createTagDto: CreateTagDto) {
-    return 'This action adds a new tag';
+  async create(createTagDto: CreateTagDto): Promise<Tag> {
+    const newTag = new Tag();
+    newTag.name = createTagDto.name;
+    await newTag.save();
+    return newTag;
   }
 
-  findAll() {
-    return `This action returns all tag`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} tag`;
-  }
-
-  update(id: number, updateTagDto: UpdateTagDto) {
-    return `This action updates a #${id} tag`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} tag`;
+  async findAll(): Promise<Tag[]> | null {
+    return await Tag.find();
   }
 }
