@@ -25,6 +25,6 @@ export class Blog extends BaseEntity {
   @ManyToOne(() => User, (User) => User.id)
   author: User;
 
-  @ManyToMany(() => Tag, (Tag) => Tag.blogs)
+  @ManyToMany(() => Tag, (Tag) => Tag.blogs, { eager: true })
   tags: Tag[];
 }

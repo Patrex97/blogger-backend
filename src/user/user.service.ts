@@ -20,4 +20,13 @@ export class UserService {
     await user.save();
     return this.filter(user);
   }
+
+  async getUserData(currentUser: User): Promise<User> | null {
+    const user = await User.findOne(
+      { id: currentUser.id },
+      { relations: ['blogs'] },
+    );
+
+    return user;
+  }
 }

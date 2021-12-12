@@ -51,11 +51,12 @@ export class AuthService {
 
       return res
         .cookie('jwt', token.accessToken, {
-          secure: false,
+          secure: true,
           domain: 'localhost',
           httpOnly: false,
+          sameSite: 'none',
         })
-        .json({ ok: true });
+        .json({ ok: true, token: token.accessToken });
     } catch (e) {
       return res.json({ error: e.message });
     }

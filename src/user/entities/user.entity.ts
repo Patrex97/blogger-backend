@@ -27,5 +27,5 @@ export class User extends BaseEntity {
   currentTokenId: string | null;
 
   @OneToMany(() => Blog, (Blog) => Blog.author)
-  blog: Blog[];
+  blogs: Blog[];
 }

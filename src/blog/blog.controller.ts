@@ -9,9 +9,12 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { UserObj } from 'src/decorators/user-obj.decorator';
+import { User } from 'src/user/entities/user.entity';
 import { BlogService } from './blog.service';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
+import { Blog } from './entities/blog.entity';
 
 @Controller('/blog')
 export class BlogController {
@@ -19,13 +22,14 @@ export class BlogController {
 
   @Post('/create')
   @UseGuards(AuthGuard('jwt'))
-  create(@Body() createBlogDto: CreateBlogDto) {
-    return this.blogService.create(createBlogDto);
+  create(@Body() createBlogDto: CreateBlogDto, @UserObj() user: User) {
+    return this.blogService.create(createBlogDto, user);
   }
 
-  @Get()
-  findAll() {
-    return this.blogService.findAll();
+  @Get('/all')
+  @UseGuards(AuthGuard('jwt'))
+  findAll(@UserObj() user: User): Promise<Blog[]> | null {
+    return this.blogService.findAll(user);
   }
 
   @Get(':id')

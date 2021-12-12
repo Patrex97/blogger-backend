@@ -1,15 +1,26 @@
 import { Injectable } from '@nestjs/common';
+import { User } from 'src/user/entities/user.entity';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
+import { Blog } from './entities/blog.entity';
 
 @Injectable()
 export class BlogService {
-  create(createBlogDto: CreateBlogDto) {
-    return 'This action adds a new blog';
+  async create(
+    createBlogDto: CreateBlogDto,
+    author: User,
+  ): Promise<Blog> | null {
+    const newBlog = new Blog();
+    newBlog.name = createBlogDto.name;
+    newBlog.url = createBlogDto.url;
+    newBlog.author = author;
+    newBlog.tags = createBlogDto.tags;
+    await newBlog.save();
+    return newBlog;
   }
 
-  findAll() {
-    return `This action returns all blog`;
+  async findAll(author: User): Promise<Blog[]> | null {
+    return await Blog.find();
   }
 
   findOne(id: number) {

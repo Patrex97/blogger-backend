@@ -20,4 +20,10 @@ export class UserController {
   register(@Body() newUser: RegisterDto): Promise<RegisterUserResponse> {
     return this.userService.register(newUser);
   }
+
+  @Get('/data')
+  @UseGuards(AuthGuard('jwt'))
+  async getUserData(@UserObj() user: User) {
+    return this.userService.getUserData(user);
+  }
 }
