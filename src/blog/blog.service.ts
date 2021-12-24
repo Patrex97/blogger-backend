@@ -31,7 +31,13 @@ export class BlogService {
     return `This action updates a #${id} blog`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} blog`;
+  async remove(id: string): Promise<string> {
+    console.log(id);
+    const removedBlog = await Blog.findOne({
+      id,
+    });
+    console.log(removedBlog);
+    await Blog.remove(removedBlog);
+    return `Blog removed succesfully`;
   }
 }
