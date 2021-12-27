@@ -23,8 +23,10 @@ export class BlogService {
     return await Blog.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} blog`;
+  async findOne(id: string): Promise<Blog> {
+    return await Blog.findOneOrFail({
+      id,
+    });
   }
 
   update(id: number, updateBlogDto: UpdateBlogDto) {

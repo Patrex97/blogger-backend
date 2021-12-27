@@ -33,8 +33,10 @@ export class BlogController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.blogService.findOne(+id);
+  @UseGuards(AuthGuard('jwt'))
+  // TODO zabezpieczyć przed sytaucją że uzytkownik nie jest autorem bloga
+  findOne(@Param('id') id: string): Promise<Blog> {
+    return this.blogService.findOne(id);
   }
 
   @Patch(':id')
