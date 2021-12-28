@@ -51,7 +51,8 @@ export class AuthService {
 
       return res
         .cookie('jwt', token.accessToken, {
-          secure: true,
+          // set true if creating cookie is not working
+          secure: false,
           domain: 'localhost',
           httpOnly: false,
           sameSite: 'none',

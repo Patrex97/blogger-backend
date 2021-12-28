@@ -4,8 +4,10 @@ import {
   PrimaryGeneratedColumn,
   BaseEntity,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { Blog } from '../../blog/entities/blog.entity';
+import { Content } from 'src/content/entities/content.entity';
 
 @Entity()
 export class Post extends BaseEntity {
@@ -15,11 +17,11 @@ export class Post extends BaseEntity {
   @Column()
   title: string;
 
-  @Column('text')
-  content: string;
-
   @Column()
   createdAt: Date;
+
+  @OneToMany(() => Content, (Content) => Content.post)
+  content: Content[];
 
   @ManyToOne((type) => Blog, (Blog) => Blog.id)
   blog: Blog;

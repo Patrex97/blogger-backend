@@ -12,6 +12,7 @@ import { Blog } from './blog/entities/blog.entity';
 import { TagModule } from './tag/tag.module';
 import { Tag } from './tag/entities/tag.entity';
 import { ContentModule } from './content/content.module';
+import { Content } from './content/entities/content.entity';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { ContentModule } from './content/content.module';
       username: 'root',
       password: '',
       database: 'blog',
-      entities: [User, Blog, Tag, Post],
+      entities: [User, Blog, Tag, Post, Content],
       synchronize: true,
     }),
     UserModule,
