@@ -10,13 +10,14 @@ import {
 import { ContentService } from './content.service';
 import { CreateContentDto } from './dto/create-content.dto';
 import { UpdateContentDto } from './dto/update-content.dto';
+import { Content } from './entities/content.entity';
 
 @Controller('/content')
 export class ContentController {
   constructor(private readonly contentService: ContentService) {}
 
   @Post('/add')
-  create(@Body() createContentDto: CreateContentDto) {
+  create(@Body() createContentDto: CreateContentDto): Promise<Content> {
     return this.contentService.create(createContentDto);
   }
 

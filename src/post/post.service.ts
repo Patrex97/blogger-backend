@@ -8,7 +8,7 @@ export class PostsService {
   async create(createPostDto: CreatePostDto): Promise<Post> {
     const newPost = new Post();
     newPost.title = createPostDto.title;
-    newPost.createdAt = new Date();
+    newPost.createdAt = new Date().toString();
     await newPost.save();
     return newPost;
   }

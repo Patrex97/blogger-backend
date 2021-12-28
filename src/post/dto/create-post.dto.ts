@@ -1,8 +1,8 @@
 import { Blog } from 'src/blog/entities/blog.entity';
+import { Content } from '../../content/entities/content.entity';
 
 export class CreatePostDto {
   title: string;
-  content: string;
-  createdAt: Date;
   blog: Blog;
+  content: Content[] | [];
 }

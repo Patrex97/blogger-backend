@@ -18,7 +18,7 @@ export class Post extends BaseEntity {
   title: string;
 
   @Column()
-  createdAt: Date;
+  createdAt: string;
 
   @OneToMany(() => Content, (Content) => Content.post)
   content: Content[];

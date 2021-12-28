@@ -1,12 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { CreateContentDto } from './dto/create-content.dto';
 import { UpdateContentDto } from './dto/update-content.dto';
+import { Post } from '../post/entities/post.entity';
+import { Content } from './entities/content.entity';
 
 @Injectable()
 export class ContentService {
-  create(createContentDto: CreateContentDto) {
-    console.log(createContentDto);
-    return 'This action adds a new content';
+  async create(createContentDto: CreateContentDto): Promise<Content> {
+    const newPostContent = new Content();
+    newPostContent.type = createContentDto.type;
+    newPostContent.content = createContentDto.content;
+    newPostContent.order = createContentDto.order;
+    newPostContent.post = await Post.findOne({
+      id: createContentDto.postId,
+    });
+    await newPostContent.save();
+    return newPostContent;
   }
 
   findAll() {
