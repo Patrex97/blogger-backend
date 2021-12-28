@@ -1,8 +1,8 @@
-import { User } from '../../user/entities/user.entity';
+import { Blog } from 'src/blog/entities/blog.entity';
 
 export class CreatePostDto {
   title: string;
   content: string;
   createdAt: Date;
-  Author: User;
+  blog: Blog;
 }

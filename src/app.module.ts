@@ -11,6 +11,7 @@ import { BlogModule } from './blog/blog.module';
 import { Blog } from './blog/entities/blog.entity';
 import { TagModule } from './tag/tag.module';
 import { Tag } from './tag/entities/tag.entity';
+import { ContentModule } from './content/content.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { Tag } from './tag/entities/tag.entity';
     PostsModule,
     BlogModule,
     TagModule,
+    ContentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

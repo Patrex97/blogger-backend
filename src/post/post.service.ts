@@ -5,8 +5,13 @@ import { Post } from './entities/post.entity';
 
 @Injectable()
 export class PostsService {
-  create(createPostDto: CreatePostDto) {
-    return 'This action adds a new post';
+  async create(createPostDto: CreatePostDto): Promise<Post> {
+    const newPost = new Post();
+    newPost.title = createPostDto.title;
+    newPost.content = createPostDto.content;
+    newPost.createdAt = new Date();
+    await newPost.save();
+    return newPost;
   }
 
   async findAll() {
