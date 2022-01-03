@@ -3,13 +3,24 @@ import { CreateContentDto } from './dto/create-content.dto';
 import { UpdateContentDto } from './dto/update-content.dto';
 import { Post } from '../post/entities/post.entity';
 import { Content } from './entities/content.entity';
+import { MulterDiskUploadedFiles } from '../interfaces/files';
+import { ContentTypes } from '../interfaces/user';
 
 @Injectable()
 export class ContentService {
-  async create(createContentDto: CreateContentDto): Promise<Content> {
+  async create(
+    createContentDto: CreateContentDto,
+    files: MulterDiskUploadedFiles,
+  ): Promise<Content> {
+    const contentPhoto = files.photo?.[0] ?? null;
     const newPostContent = new Content();
     newPostContent.type = createContentDto.type;
-    newPostContent.content = createContentDto.content;
+    if (createContentDto.type === ContentTypes.Image) {
+      newPostContent.content = contentPhoto?.filename ?? null;
+    }
+    if (createContentDto.type === ContentTypes.Text) {
+      newPostContent.content = createContentDto.content;
+    }
     newPostContent.order = createContentDto.order;
     newPostContent.post = await Post.findOne({
       id: createContentDto.postId,
