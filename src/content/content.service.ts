@@ -9,22 +9,24 @@ import { ContentTypes } from '../interfaces/user';
 @Injectable()
 export class ContentService {
   async create(
-    createContentDto: CreateContentDto,
+    contentData: CreateContentDto,
     files: MulterDiskUploadedFiles,
   ): Promise<Content> {
-    const contentPhoto = files.photo?.[0] ?? null;
+    const contentPhoto = files?.photo?.[0] ?? null;
     const newPostContent = new Content();
-    newPostContent.type = createContentDto.type;
-    if (createContentDto.type === ContentTypes.Image) {
+    newPostContent.type = contentData.type;
+    if (contentData.type === ContentTypes.Image) {
       newPostContent.content = contentPhoto?.filename ?? null;
     }
-    if (createContentDto.type === ContentTypes.Text) {
-      newPostContent.content = createContentDto.content;
+    if (contentData.type === ContentTypes.Text) {
+      newPostContent.content = contentData.content;
     }
-    newPostContent.order = createContentDto.order;
+    newPostContent.order = contentData.order;
     newPostContent.post = await Post.findOne({
-      id: createContentDto.postId,
+      id: contentData.postId,
     });
+    console.log(newPostContent);
+
     await newPostContent.save();
     return newPostContent;
   }

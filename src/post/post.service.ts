@@ -2,13 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { Post } from './entities/post.entity';
+import { Blog } from 'src/blog/entities/blog.entity';
 
 @Injectable()
 export class PostsService {
-  async create(createPostDto: CreatePostDto): Promise<Post> {
+  async create(postData: CreatePostDto): Promise<Post> {
     const newPost = new Post();
-    newPost.title = createPostDto.title;
+    newPost.title = postData.title;
     newPost.createdAt = new Date().toString();
+    newPost.blog = await Blog.findOne({ id: postData.blogId });
     await newPost.save();
     return newPost;
   }
