@@ -38,7 +38,6 @@ export class BlogService {
     const removedBlog = await Blog.findOne({
       id,
     });
-    console.log(removedBlog);
     await Blog.remove(removedBlog);
     return `Blog removed succesfully`;
   }

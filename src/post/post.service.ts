@@ -3,6 +3,7 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { Post } from './entities/post.entity';
 import { Blog } from 'src/blog/entities/blog.entity';
+import { User } from '../user/entities/user.entity';
 
 @Injectable()
 export class PostsService {
@@ -15,13 +16,18 @@ export class PostsService {
     return newPost;
   }
 
-  async findAll() {
-    console.log(await Post.find());
-    return `This action returns all posts`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} post`;
+  async findBlogPosts(blogId: string, user: User): Promise<Post[]> {
+    const blog = Blog.findOne({ where: { id: blogId } });
+    const posts = await Post.find({
+      // join: {
+      //   alias: 'post',
+      //   leftJoinAndSelect: {
+      //     type: 'post.content',
+      //   },
+      // },
+      where: { blog },
+    });
+    return posts;
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {
