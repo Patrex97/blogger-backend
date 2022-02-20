@@ -14,10 +14,16 @@ export class PostsController {
     return this.postsService.create(createPostDto);
   }
 
-  @Get('/findAll/:id')
   @UseGuards(AuthGuard('jwt'))
+  @Get('/findAll/:id')
   findUserPosts(@Param('id') blogId: string, @UserObj() user: User) {
     return this.postsService.findBlogPosts(blogId, user);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('/findOne/:id')
+  findOne(@Param('id') postId: string) {
+    return this.postsService.findOne(postId);
   }
 
   // @Get('/:id')

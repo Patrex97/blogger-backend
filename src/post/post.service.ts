@@ -30,6 +30,13 @@ export class PostsService {
     return posts;
   }
 
+  async findOne(postId: string): Promise<Post> {
+    return await Post.findOne({
+      relations: ['content'],
+      where: { id: postId },
+    });
+  }
+
   update(id: number, updatePostDto: UpdatePostDto) {
     return `This action updates a #${id} post`;
   }
