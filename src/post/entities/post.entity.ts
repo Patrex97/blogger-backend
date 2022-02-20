@@ -20,9 +20,12 @@ export class Post extends BaseEntity {
   @Column()
   createdAt: string;
 
+  @Column({ nullable: true })
+  featuredImage: string;
+
   @OneToMany(() => Content, (Content) => Content.post)
   content: Content[];
 
-  @ManyToOne((type) => Blog, (Blog) => Blog.id)
+  @ManyToOne(() => Blog, (Blog) => Blog.id)
   blog: Blog;
 }

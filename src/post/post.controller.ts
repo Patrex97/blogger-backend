@@ -1,15 +1,49 @@
-import { Controller, Get, Post, Body, UseGuards, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  UseGuards,
+  Param,
+  UseInterceptors,
+  UploadedFile,
+  Res,
+} from '@nestjs/common';
 import { PostsService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { FileInterceptor } from '@nestjs/platform-express';
+import * as path from 'path';
+import { storageDir } from '../utils/storage';
+import { createReadStream } from 'fs';
+import { Response } from 'express';
 
 @Controller('/post')
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Post('/create')
-  create(@Body() createPostDto: CreatePostDto) {
-    return this.postsService.create(createPostDto);
+  @UseInterceptors(
+    FileInterceptor('featuredImage', {
+      dest: path.join(storageDir(), 'photos'),
+    }),
+  )
+  create(
+    @Body() createPostDto: CreatePostDto,
+    @UploadedFile() image: Express.Multer.File,
+  ) {
+    return this.postsService.create({
+      ...createPostDto,
+      featuredImage: image.filename,
+    });
+  }
+
+  @Get('/file')
+  getFile(@Res() res: Response) {
+    const file = createReadStream(
+      path.join(storageDir(), 'photos', '09783f02b0eb787037e030dd86601fc6'),
+    );
+    file.pipe(res);
   }
 
   @UseGuards(AuthGuard('jwt'))

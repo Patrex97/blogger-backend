@@ -6,10 +6,12 @@ import { Blog } from 'src/blog/entities/blog.entity';
 @Injectable()
 export class PostsService {
   async create(postData: CreatePostDto): Promise<Post> {
+    const { title, featuredImage, blogId } = postData;
     const newPost = new Post();
-    newPost.title = postData.title;
+    newPost.title = title;
+    newPost.featuredImage = featuredImage;
     newPost.createdAt = new Date().toString();
-    newPost.blog = await Blog.findOne({ id: postData.blogId });
+    newPost.blog = await Blog.findOne({ id: blogId });
     await newPost.save();
     return newPost;
   }

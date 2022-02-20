@@ -1,7 +1,11 @@
-import { Content } from '../../content/entities/content.entity';
+import { IsString } from 'class-validator';
 
 export class CreatePostDto {
+  @IsString()
   title: string;
+
+  @IsString()
   blogId: string;
-  content: Content[] | [];
+
+  featuredImage: string;
 }
