@@ -2,8 +2,6 @@ import { Controller, Get, Post, Body, UseGuards, Param } from '@nestjs/common';
 import { PostsService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { UserObj } from '../decorators/user-obj.decorator';
-import { User } from '../user/entities/user.entity';
 
 @Controller('/post')
 export class PostsController {
@@ -16,8 +14,8 @@ export class PostsController {
 
   @UseGuards(AuthGuard('jwt'))
   @Get('/findAll/:id')
-  findUserPosts(@Param('id') blogId: string, @UserObj() user: User) {
-    return this.postsService.findBlogPosts(blogId, user);
+  findUserPosts(@Param('id') blogId: string) {
+    return this.postsService.findBlogPosts(blogId);
   }
 
   @UseGuards(AuthGuard('jwt'))

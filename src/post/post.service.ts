@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
-import { UpdatePostDto } from './dto/update-post.dto';
 import { Post } from './entities/post.entity';
 import { Blog } from 'src/blog/entities/blog.entity';
-import { User } from '../user/entities/user.entity';
 
 @Injectable()
 export class PostsService {
@@ -16,18 +14,11 @@ export class PostsService {
     return newPost;
   }
 
-  async findBlogPosts(blogId: string, user: User): Promise<Post[]> {
-    const blog = Blog.findOne({ where: { id: blogId } });
-    const posts = await Post.find({
-      // join: {
-      //   alias: 'post',
-      //   leftJoinAndSelect: {
-      //     type: 'post.content',
-      //   },
-      // },
+  async findBlogPosts(blogId: string): Promise<Post[]> {
+    const blog = await Blog.findOne({ where: { id: blogId } });
+    return await Post.find({
       where: { blog },
     });
-    return posts;
   }
 
   async findOne(postId: string): Promise<Post> {
@@ -37,7 +28,7 @@ export class PostsService {
     });
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
+  update(id: number) {
     return `This action updates a #${id} post`;
   }
 
