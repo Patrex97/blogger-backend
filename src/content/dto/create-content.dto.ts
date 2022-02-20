@@ -5,8 +5,7 @@ export class CreateContentDto {
   @IsString()
   type: ContentTypes;
 
-  @IsString()
-  content: string;
+  content: any;
 
   @IsNumber()
   order: number;

@@ -14,17 +14,25 @@ export class ContentService {
   ): Promise<Content> {
     const contentPhoto = files?.photo?.[0] ?? null;
     const newPostContent = new Content();
-    newPostContent.type = contentData.type;
-    if (contentData.type === ContentTypes.Image) {
-      newPostContent.content = contentPhoto?.filename ?? null;
+    try {
+      newPostContent.type = contentData.type;
+      if (contentData.type === ContentTypes.Image) {
+        newPostContent.content = contentPhoto?.filename ?? null;
+      }
+      if (contentData.type === ContentTypes.Text) {
+        newPostContent.content = contentData.content;
+      }
+      newPostContent.order = contentData.order;
+      newPostContent.post = await Post.findOne({
+        id: contentData.postId,
+      });
+    } catch (e) {
+      const post = await Post.findOne({
+        id: contentData.postId,
+      });
+      await post.remove();
+      throw new Error(e);
     }
-    if (contentData.type === ContentTypes.Text) {
-      newPostContent.content = contentData.content;
-    }
-    newPostContent.order = contentData.order;
-    newPostContent.post = await Post.findOne({
-      id: contentData.postId,
-    });
     console.log(newPostContent);
 
     await newPostContent.save();
