@@ -3,21 +3,20 @@ import { CreateContentDto } from './dto/create-content.dto';
 import { UpdateContentDto } from './dto/update-content.dto';
 import { Post } from '../post/entities/post.entity';
 import { Content } from './entities/content.entity';
-import { MulterDiskUploadedFiles } from '../interfaces/files';
 import { ContentTypes } from '../interfaces/user';
 
 @Injectable()
 export class ContentService {
   async create(
     contentData: CreateContentDto,
-    files: MulterDiskUploadedFiles,
+    image: Express.Multer.File,
   ): Promise<Content> {
-    const contentPhoto = files?.photo?.[0] ?? null;
     const newPostContent = new Content();
     try {
       newPostContent.type = contentData.type;
+      console.log(image);
       if (contentData.type === ContentTypes.Image) {
-        newPostContent.content = contentPhoto?.filename ?? null;
+        newPostContent.content = image?.filename || '';
       }
       if (contentData.type === ContentTypes.Text) {
         newPostContent.content = contentData.content;

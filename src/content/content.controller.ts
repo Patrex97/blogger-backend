@@ -7,15 +7,14 @@ import {
   Param,
   Delete,
   UseInterceptors,
-  UploadedFiles,
+  UploadedFile,
 } from '@nestjs/common';
 import { ContentService } from './content.service';
 import { CreateContentDto } from './dto/create-content.dto';
 import { UpdateContentDto } from './dto/update-content.dto';
 import { Content } from './entities/content.entity';
-import { FileFieldsInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor } from '@nestjs/platform-express';
 import * as path from 'path';
-import { MulterDiskUploadedFiles } from '../interfaces/files';
 import { storageDir } from '../utils/storage';
 
 @Controller('/content')
@@ -24,21 +23,15 @@ export class ContentController {
 
   @Post('/add')
   @UseInterceptors(
-    FileFieldsInterceptor(
-      [
-        {
-          name: 'photo',
-          maxCount: 1,
-        },
-      ],
-      { dest: path.join(storageDir(), 'photos') },
-    ),
+    FileInterceptor('image', {
+      dest: path.join(storageDir(), 'photos'),
+    }),
   )
   create(
     @Body() createContentDto: CreateContentDto,
-    @UploadedFiles() files: MulterDiskUploadedFiles,
+    @UploadedFile() image: Express.Multer.File,
   ): Promise<Content> {
-    return this.contentService.create(createContentDto, files);
+    return this.contentService.create(createContentDto, image);
   }
 
   @Get()

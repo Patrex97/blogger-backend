@@ -41,7 +41,7 @@ export class PostsController {
   @Get('/file')
   getFile(@Res() res: Response) {
     const file = createReadStream(
-      path.join(storageDir(), 'photos', '09783f02b0eb787037e030dd86601fc6'),
+      path.join(storageDir(), 'photos', '0ca48a3615411ebd37a3120a25c50fa7'),
     );
     file.pipe(res);
   }
@@ -57,12 +57,7 @@ export class PostsController {
   findOne(@Param('id') postId: string) {
     return this.postsService.findOne(postId);
   }
-
-  // @Get('/:id')
-  // findOne(@Param('id') id: string) {
-  //   return this.postsService.findOne(+id);
-  // }
-  //
+  
   // @Patch('/:id')
   // update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
   //   return this.postsService.update(+id, updatePostDto);
