@@ -66,8 +66,6 @@ export class PostsController {
   //
   @Delete('/:id')
   remove(@Param('id') postId: string) {
-    console.log(postId);
-
     return this.postsService.remove(postId);
   }
 }

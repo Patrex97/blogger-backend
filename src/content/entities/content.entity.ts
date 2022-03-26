@@ -22,6 +22,8 @@ export class Content extends BaseEntity {
   @Column()
   order: number;
 
-  @ManyToOne((type) => Post, (Post) => Post.id)
+  @ManyToOne((type) => Post, (Post) => Post.id, {
+    onDelete: 'CASCADE',
+  })
   post: Post;
 }
