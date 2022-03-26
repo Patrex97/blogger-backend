@@ -34,7 +34,7 @@ export class PostsService {
     return `This action updates a #${id} post`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} post`;
+  async remove(postId: string): Promise<boolean> {
+    return !!(await Post.delete(postId)).affected;
   }
 }

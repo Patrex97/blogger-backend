@@ -8,6 +8,7 @@ import {
   UseInterceptors,
   UploadedFile,
   Res,
+  Delete,
 } from '@nestjs/common';
 import { PostsService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -34,7 +35,7 @@ export class PostsController {
   ) {
     return this.postsService.create({
       ...createPostDto,
-      featuredImage: image.filename,
+      featuredImage: image?.filename,
     });
   }
 
@@ -57,14 +58,16 @@ export class PostsController {
   findOne(@Param('id') postId: string) {
     return this.postsService.findOne(postId);
   }
-  
+
   // @Patch('/:id')
   // update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
   //   return this.postsService.update(+id, updatePostDto);
   // }
   //
-  // @Delete('/:id')
-  // remove(@Param('id') id: string) {
-  //   return this.postsService.remove(+id);
-  // }
+  @Delete('/:id')
+  remove(@Param('id') postId: string) {
+    console.log(postId);
+
+    return this.postsService.remove(postId);
+  }
 }

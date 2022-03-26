@@ -4,6 +4,7 @@ import { BlogController } from './blog.controller';
 
 @Module({
   controllers: [BlogController],
-  providers: [BlogService]
+  providers: [BlogService],
+  exports: [BlogService],
 })
 export class BlogModule {}
