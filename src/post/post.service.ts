@@ -30,8 +30,21 @@ export class PostsService {
     });
   }
 
-  update(id: number) {
-    return `This action updates a #${id} post`;
+  async update(postId: string, postData: CreatePostDto): Promise<boolean> {
+    const { title, featuredImage } = postData;
+    const updatedPost = await Post.findOne({
+      relations: ['blog'],
+      where: {
+        id: postId,
+      },
+    });
+
+    console.log(postData);
+    updatedPost.title = title;
+    if (featuredImage) {
+      updatedPost.featuredImage = featuredImage;
+    }
+    return !!(await Post.update(postId, updatedPost)).affected;
   }
 
   async remove(postId: string): Promise<boolean> {

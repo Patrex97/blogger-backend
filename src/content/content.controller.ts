@@ -1,9 +1,7 @@
 import {
   Controller,
-  Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   UseInterceptors,
@@ -11,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { ContentService } from './content.service';
 import { CreateContentDto } from './dto/create-content.dto';
-import { UpdateContentDto } from './dto/update-content.dto';
 import { Content } from './entities/content.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
 import * as path from 'path';
@@ -34,23 +31,8 @@ export class ContentController {
     return this.contentService.create(createContentDto, image);
   }
 
-  @Get()
-  findAll() {
-    return this.contentService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.contentService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateContentDto: UpdateContentDto) {
-    return this.contentService.update(+id, updateContentDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.contentService.remove(+id);
+  @Delete('/:id')
+  removePostContent(@Param('id') postId: string) {
+    return this.contentService.removePostContent(postId);
   }
 }

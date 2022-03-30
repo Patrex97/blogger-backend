@@ -9,6 +9,7 @@ import {
   UploadedFile,
   Res,
   Delete,
+  Patch,
 } from '@nestjs/common';
 import { PostsService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -23,6 +24,7 @@ import { Response } from 'express';
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Post('/create')
   @UseInterceptors(
     FileInterceptor('featuredImage', {
@@ -59,11 +61,25 @@ export class PostsController {
     return this.postsService.findOne(postId);
   }
 
-  // @Patch('/:id')
-  // update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
-  //   return this.postsService.update(+id, updatePostDto);
-  // }
-  //
+  @UseGuards(AuthGuard('jwt'))
+  @Patch('/:id')
+  @UseInterceptors(
+    FileInterceptor('featuredImage', {
+      dest: path.join(storageDir(), 'photos'),
+    }),
+  )
+  update(
+    @Param('id') postId: string,
+    @Body() postData: CreatePostDto,
+    @UploadedFile() image: Express.Multer.File,
+  ) {
+    return this.postsService.update(postId, {
+      ...postData,
+      featuredImage: image?.filename,
+    });
+  }
+
+  @UseGuards(AuthGuard('jwt'))
   @Delete('/:id')
   remove(@Param('id') postId: string) {
     return this.postsService.remove(postId);

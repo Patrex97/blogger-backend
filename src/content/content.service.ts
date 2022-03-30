@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { CreateContentDto } from './dto/create-content.dto';
-import { UpdateContentDto } from './dto/update-content.dto';
 import { Post } from '../post/entities/post.entity';
 import { Content } from './entities/content.entity';
 import { ContentTypes } from '../interfaces/user';
@@ -38,19 +37,14 @@ export class ContentService {
     return newPostContent;
   }
 
-  findAll() {
-    return `This action returns all content`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} content`;
-  }
-
-  update(id: number, updateContentDto: UpdateContentDto) {
-    return `This action updates a #${id} content`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} content`;
+  removePostContent(postId: string) {
+    const contentList = Content.createQueryBuilder('content')
+      .leftJoinAndSelect('content.postId', 'post')
+      .where('post.id = :postId', {
+        postId,
+      })
+      .getMany();
+    console.log('content List', contentList);
+    return contentList;
   }
 }
