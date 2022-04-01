@@ -13,7 +13,6 @@ import { UserObj } from 'src/decorators/user-obj.decorator';
 import { User } from 'src/user/entities/user.entity';
 import { BlogService } from './blog.service';
 import { CreateBlogDto } from './dto/create-blog.dto';
-import { UpdateBlogDto } from './dto/update-blog.dto';
 import { Blog } from './entities/blog.entity';
 
 @Controller('/blog')
@@ -28,7 +27,7 @@ export class BlogController {
 
   @Get('/all')
   @UseGuards(AuthGuard('jwt'))
-  findAll(@UserObj() user: User): Promise<Blog[]> | null {
+  findAll(@UserObj() user: User): Promise<Blog[] | undefined> {
     return this.blogService.findAll(user);
   }
 
@@ -40,8 +39,8 @@ export class BlogController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBlogDto: UpdateBlogDto) {
-    return this.blogService.update(+id, updateBlogDto);
+  update(@Param('id') id: string) {
+    return this.blogService.update(+id);
   }
 
   @Delete(':id')

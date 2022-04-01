@@ -21,11 +21,11 @@ export class ContentService {
         newPostContent.content = contentData.content;
       }
       newPostContent.order = contentData.order;
-      newPostContent.post = await Post.findOne({
+      newPostContent.post = await Post.findOneOrFail({
         id: contentData.postId,
       });
-    } catch (e) {
-      const post = await Post.findOne({
+    } catch (e: any) {
+      const post = await Post.findOneOrFail({
         id: contentData.postId,
       });
       await post.remove();
@@ -37,14 +37,13 @@ export class ContentService {
     return newPostContent;
   }
 
-  removePostContent(postId: string) {
-    const contentList = Content.createQueryBuilder('content')
-      .leftJoinAndSelect('content.postId', 'post')
+  async removePostContent(postId: string): Promise<boolean> {
+    const contentList = await Content.createQueryBuilder('content')
+      .leftJoinAndSelect('content.post', 'post')
       .where('post.id = :postId', {
         postId,
       })
       .getMany();
-    console.log('content List', contentList);
-    return contentList;
+    return !!(await Content.remove(contentList)).length;
   }
 }

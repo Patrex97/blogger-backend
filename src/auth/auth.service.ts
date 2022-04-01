@@ -28,7 +28,7 @@ export class AuthService {
 
   private async generateToken(user: User): Promise<string> {
     let token;
-    let userWithThisToken = null;
+    let userWithThisToken: User | undefined;
     do {
       token = uuid();
       userWithThisToken = await User.findOne({ currentTokenId: token });
@@ -58,7 +58,7 @@ export class AuthService {
           sameSite: 'none',
         })
         .json({ ok: true, token: token.accessToken });
-    } catch (e) {
+    } catch (e: any) {
       return res.json({ error: e.message });
     }
   }
@@ -73,7 +73,7 @@ export class AuthService {
         httpOnly: true,
       });
       return res.json({ ok: true });
-    } catch (e) {
+    } catch (e: any) {
       return res.json({ error: e.message });
     }
   }

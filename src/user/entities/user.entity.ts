@@ -10,22 +10,22 @@ import { Blog } from '../../blog/entities/blog.entity';
 @Entity()
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id!: string;
 
   @Column({
     length: 40,
   })
-  email: string;
+  email!: string;
 
   @Column()
-  password: string;
+  password!: string;
 
   @Column({
     nullable: true,
     default: null,
   })
-  currentTokenId: string | null;
+  currentTokenId?: string | null;
 
   @OneToMany(() => Blog, (Blog) => Blog.author)
-  blogs: Blog[];
+  blogs?: Blog[];
 }

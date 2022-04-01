@@ -3,13 +3,13 @@ import { IsNumber, IsString } from 'class-validator';
 
 export class CreateContentDto {
   @IsString()
-  type: ContentTypes;
+  type!: ContentTypes;
 
   content: any;
 
   @IsNumber()
-  order: number;
+  order!: number;
 
   @IsString()
-  postId: string;
+  postId!: string;
 }

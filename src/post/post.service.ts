@@ -11,7 +11,7 @@ export class PostsService {
     newPost.title = title;
     newPost.featuredImage = featuredImage;
     newPost.createdAt = new Date().toString();
-    newPost.blog = await Blog.findOne({ id: blogId });
+    newPost.blog = await Blog.findOneOrFail({ id: blogId });
     await newPost.save();
     return newPost;
   }
@@ -24,7 +24,7 @@ export class PostsService {
   }
 
   async findOne(postId: string): Promise<Post> {
-    return await Post.findOne({
+    return await Post.findOneOrFail({
       relations: ['content'],
       where: { id: postId },
     });
@@ -32,14 +32,12 @@ export class PostsService {
 
   async update(postId: string, postData: CreatePostDto): Promise<boolean> {
     const { title, featuredImage } = postData;
-    const updatedPost = await Post.findOne({
+    const updatedPost = await Post.findOneOrFail({
       relations: ['blog'],
       where: {
         id: postId,
       },
     });
-
-    console.log(postData);
     updatedPost.title = title;
     if (featuredImage) {
       updatedPost.featuredImage = featuredImage;

@@ -2,10 +2,10 @@ import { IsString } from 'class-validator';
 
 export class CreatePostDto {
   @IsString()
-  title: string;
+  title!: string;
 
   @IsString()
-  blogId: string;
+  blogId!: string;
 
-  featuredImage: string;
+  featuredImage?: string;
 }

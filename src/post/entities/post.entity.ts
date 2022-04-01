@@ -12,20 +12,20 @@ import { Content } from 'src/content/entities/content.entity';
 @Entity()
 export class Post extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id!: string;
 
   @Column()
-  title: string;
+  title!: string;
 
   @Column()
-  createdAt: string;
+  createdAt!: string;
 
   @Column({ nullable: true })
-  featuredImage: string;
+  featuredImage?: string;
 
   @OneToMany(() => Content, (Content) => Content.post)
-  content: Content[];
+  content?: Content[];
 
   @ManyToOne(() => Blog, (Blog) => Blog.id)
-  blog: Blog;
+  blog!: Blog;
 }

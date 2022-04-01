@@ -9,8 +9,6 @@ import { PostsModule } from './post/post.module';
 import { Post } from './post/entities/post.entity';
 import { BlogModule } from './blog/blog.module';
 import { Blog } from './blog/entities/blog.entity';
-import { TagModule } from './tag/tag.module';
-import { Tag } from './tag/entities/tag.entity';
 import { ContentModule } from './content/content.module';
 import { Content } from './content/entities/content.entity';
 
@@ -30,7 +28,6 @@ import { Content } from './content/entities/content.entity';
     AuthModule,
     PostsModule,
     BlogModule,
-    TagModule,
     ContentModule,
   ],
   controllers: [AppController],

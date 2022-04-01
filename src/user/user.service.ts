@@ -21,7 +21,7 @@ export class UserService {
     return this.filter(user);
   }
 
-  async getUserData(currentUser: User): Promise<User> | null {
+  async getUserData(currentUser: User): Promise<User | undefined> {
     const user = await User.findOne(
       { id: currentUser.id },
       { relations: ['blogs'] },

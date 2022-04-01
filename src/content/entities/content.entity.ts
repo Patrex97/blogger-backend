@@ -11,19 +11,19 @@ import { ContentTypes } from '../../interfaces/user';
 @Entity()
 export class Content extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id!: string;
 
   @Column()
-  type: ContentTypes;
+  type!: ContentTypes;
 
   @Column('text')
-  content: string;
+  content!: string;
 
   @Column()
-  order: number;
+  order!: number;
 
   @ManyToOne((type) => Post, (Post) => Post.id, {
     onDelete: 'CASCADE',
   })
-  post: Post;
+  post!: Post;
 }
