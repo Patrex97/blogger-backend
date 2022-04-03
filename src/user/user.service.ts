@@ -12,9 +12,12 @@ export class UserService {
   }
 
   async register(newUser: RegisterDto): Promise<RegisterUserResponse> {
-    const checkUser = User.findOne({ email: newUser.email });
+    const checkUser = await User.findOne({ email: newUser.email });
     if (checkUser) {
-      throw new HttpException('User with this login already exists', 401);
+      throw new HttpException(
+        'Użytkownik z tym adresem email już isntenie',
+        401,
+      );
     }
     const user = new User();
     user.email = newUser.email;

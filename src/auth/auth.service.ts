@@ -45,7 +45,7 @@ export class AuthService {
         password: hashPassword(req.password),
       });
       if (!user) {
-        return res.json({ error: 'Invalid login data!' });
+        return res.json({ error: 'Email lub hasło nie są prawidłowe!' });
       }
       const token = await this.createToken(await this.generateToken(user));
 
