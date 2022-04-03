@@ -11,7 +11,7 @@ export class BlogService {
   ): Promise<Blog | undefined> {
     const newBlog = new Blog();
     newBlog.name = createBlogDto.name;
-    newBlog.url = createBlogDto.url;
+    newBlog.url = `https:/theBestBlog.test/${createBlogDto.url}`;
     newBlog.author = author;
     await newBlog.save();
     return newBlog;
