@@ -32,7 +32,6 @@ export class BlogService {
   }
 
   async remove(id: string): Promise<string> {
-    console.log(id);
     const removedBlog = await Blog.findOneOrFail({
       id,
     });

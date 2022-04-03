@@ -5,7 +5,7 @@ export class CreateContentDto {
   @IsString()
   type!: ContentTypes;
 
-  content: any;
+  content?: string | undefined;
 
   @IsNumber()
   order!: number;

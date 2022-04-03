@@ -12,8 +12,7 @@ export class PostsService {
     newPost.featuredImage = featuredImage;
     newPost.createdAt = new Date().toString();
     newPost.blog = await Blog.findOneOrFail({ id: blogId });
-    await newPost.save();
-    return newPost;
+    return await newPost.save();
   }
 
   async findBlogPosts(blogId: string): Promise<Post[]> {

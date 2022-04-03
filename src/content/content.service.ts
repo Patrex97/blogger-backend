@@ -13,9 +13,12 @@ export class ContentService {
     const newPostContent = new Content();
     try {
       newPostContent.type = contentData.type;
-      console.log(image);
       if (contentData.type === ContentTypes.Image) {
-        newPostContent.content = image?.filename || '';
+        if (image?.filename) {
+          newPostContent.content = image?.filename;
+        } else {
+          newPostContent.content = contentData.content || '';
+        }
       }
       if (contentData.type === ContentTypes.Text) {
         newPostContent.content = contentData.content;
@@ -31,10 +34,8 @@ export class ContentService {
       await post.remove();
       throw new Error(e);
     }
-    console.log(newPostContent);
 
-    await newPostContent.save();
-    return newPostContent;
+    return await newPostContent.save();
   }
 
   async removePostContent(postId: string): Promise<boolean> {
