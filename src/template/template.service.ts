@@ -17,6 +17,10 @@ export class TemplateService {
     return await Template.save(newTemplate);
   }
 
+  async removeTemplate(templateId: string): Promise<boolean> {
+    return !!(await Template.delete(templateId))?.affected;
+  }
+
   async findAllTemplates(author: User): Promise<Template[] | undefined> {
     return Template.find({
       where: {
