@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { RegisterDto } from './dto/register.dto';
 import { RegisterUserResponse } from '../interfaces/user';
 import { User } from './entities/user.entity';
@@ -12,8 +12,10 @@ export class UserService {
   }
 
   async register(newUser: RegisterDto): Promise<RegisterUserResponse> {
-    // TODO add email checking before user creation
-
+    const checkUser = User.findOne({ email: newUser.email });
+    if (checkUser) {
+      throw new HttpException('User with this login already exists', 401);
+    }
     const user = new User();
     user.email = newUser.email;
     user.password = hashPassword(newUser.password);
